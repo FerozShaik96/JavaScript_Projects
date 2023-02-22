@@ -53,7 +53,7 @@ btnScorllTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-// 2. Page Navigation WithOut Using The Event Delegation
+//       2. Page Navigation WithOut Using The Event Delegation
 
 /*document.querySelectorAll('.nav__link').forEach(function (el) {
   el.addEventListener('click', function (e) {
@@ -65,7 +65,7 @@ btnScorllTo.addEventListener('click', function (e) {
   });
 });*/
 
-// Page Navigation  Using The Event Delegation
+//           Page Navigation  Using The Event Delegation
 /* Steps to do That 
 1. Add Event Listener to Common Parent Element
 2.Determine what element originated the Event*/
@@ -80,7 +80,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
-//                2.Tabbed Component
+//                3.Tabbed Component
 
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
@@ -106,7 +106,7 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
-//               3. Menu Fade Animation
+//               4. Menu Fade Animation
 
 const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
@@ -142,3 +142,28 @@ const nav = document.querySelector('.nav');
 // });
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+//        5. Sticky Navigation Bar
+
+// const initialcoords = section1.getBoundingClientRect();
+// window.addEventListener('scroll', function (e) {
+//   if (window.scrollY > initialcoords.top) nav.classList.add('sticky');
+//   else nav.classList.remove('sticky');
+// });
+
+//      Sticky Nav Bar With The Intersection Observer API
+
+const header = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+//   Call Back Function
+const stickyNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+headerObserver.observe(header);

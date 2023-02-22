@@ -29,7 +29,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-//    Implementing the Smooth Scrolling
+//  1. Implementing the Smooth Scrolling
 // The Old MEthod to Implementing the Scroll
 const btnScorllTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
@@ -50,4 +50,31 @@ btnScorllTo.addEventListener('click', function (e) {
   // });
   //  The Modern Way of Doing Scrolling Implementation
   section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+// 2. Page Navigation WithOut Using The Event Delegation
+
+/*document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
+    const id = this.getAttribute('href');
+    // With this the This keyWord will select the each Element and with this GetAttribute('href')
+    // the Link will convert selector and now was use that selector to select the elements
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});*/
+
+// Page Navigation  Using The Event Delegation
+/* Steps to do That 
+1. Add Event Listener to Common Parent Element
+2.Determine what element originated the Event*/
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // Matching Strategy
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
 });

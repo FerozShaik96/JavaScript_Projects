@@ -78,3 +78,28 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
+
+// Tabbed Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabscontent = document.querySelectorAll('.operations__content');
+
+//   Applying Event Propagation to select the buttons
+tabsContainer.addEventListener('click', function (e) {
+  //   This will Select teh nearest Parent Element With the Operations__tab
+  const clicked = e.target.closest('.operations__tab');
+  // if the user Click outside the button and inside the container to avoid the error.
+  if (!clicked) return;
+  // before Adding the operations__tab--active we need to remove them and then add them
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabscontent.forEach(c => c.classList.remove('operations__content--active'));
+  //     Activate Tab
+
+  clicked.classList.add('operations__tab--active');
+
+  // Activating Content Area
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});

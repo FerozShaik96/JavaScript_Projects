@@ -184,3 +184,20 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+//        7.  Image Lazzy Loading
+const imtarget = document.querySelectorAll('img[data-src]');
+const Loading = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+    observer.unobserve(entry.target);
+  });
+};
+const imgObserver = new IntersectionObserver(Loading, {
+  root: null,
+  threshold: 0,
+});
+imtarget.forEach(img => imgObserver.observe(img));
